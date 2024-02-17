@@ -1,0 +1,3 @@
+env/
+.env
+firebase-config.json
