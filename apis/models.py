@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from uuid import uuid4
 from datetime import datetime
-from .utils import get_username_else_email
 
 # Create your models here.
 
@@ -17,7 +16,7 @@ class User(AbstractUser):
         db_table = "user"
 
     def __str__(self) -> str:
-        return f"{get_username_else_email(self)},{self.id}"
+        return f"{self.id},{self.username}"
 
 
 class MasterProducts(models.Model):
@@ -42,7 +41,7 @@ class MasterProducts(models.Model):
         db_table = "master_products"
 
     def __str__(self) -> str:
-        return f"{self.title},{self.id}"
+        return f"{self.id}"
 
 
 class UserCart(models.Model):
@@ -56,7 +55,7 @@ class UserCart(models.Model):
         db_table = "cart"
 
     def __str__(self) -> str:
-        return f"{self.product.id} {get_username_else_email(self.user)}"
+        return f"{self.product.id} {self.user.username}"
 
 
 class UserOrders(models.Model):
@@ -81,4 +80,4 @@ class UserOrders(models.Model):
         db_table = "orders"
 
     def __str__(self) -> str:
-        return f"{self.id} {get_username_else_email(self.user)} {self.order_status}"
+        return f"{self.id} {self.user.username} {self.order_status}"
