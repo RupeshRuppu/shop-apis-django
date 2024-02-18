@@ -7,9 +7,11 @@ from .utils import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate
 from django.core.validators import EmailValidator
-from django.core.mail import EmailMessage, send_mail
+from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
+import base64
+from firebase_admin import storage
 
 
 # Create your views here.
@@ -44,6 +46,24 @@ def register(request):
                 user.save()
 
                 # send a welcome email to user.
+                recipient_email = user.username
+                recipient_name = f"{user.first_name} {user.last_name}"
+
+                # Load the HTML template
+                email_template_path = "email_template.html"
+                email_html_message = render_to_string(
+                    email_template_path, {"recipient_name": recipient_name}
+                )
+
+                # Create an EmailMessage object
+                email = EmailMessage(
+                    "Welcome to SlipperBoss, Happy Shopping",
+                    email_html_message,
+                    settings.EMAIL_HOST_USER,
+                    [recipient_email],
+                )
+                email.content_subtype = "html"
+                email.send()
 
                 # create access and refresh token to user.
                 return get_success_response(generate_tokens(user))
@@ -73,6 +93,31 @@ def login(request):
             payload["profile_picture"] = user.profile_picture
             payload["dob"] = user.birth_date
             return get_success_response(payload)
+
+        except Exception as ex:
+            return get_error_response(ex.args)
+    else:
+        return get_method_error(request, "POST")
+
+
+@csrf_exempt
+def upload_profile(request):
+    if request.method == "POST":
+        try:
+            binary = base64.b64decode(request.body)
+            destination_blob_name = "images/image.jpg"
+            bucket = storage.bucket()
+            blob = bucket.blob(destination_blob_name)
+            blob.upload_from_string(binary, content_type="image/jpg")
+            image_url = blob.public_url
+
+            # Store metadata in Firestore (optional)
+            data = {"image_url": image_url}
+            print(data)
+
+            return JsonResponse(
+                {"success": True, "message": "Image uploaded successfully."}
+            )
 
         except Exception as ex:
             return get_error_response(ex.args)

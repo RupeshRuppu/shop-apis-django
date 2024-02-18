@@ -6,6 +6,7 @@ urlpatterns = [
     path("", main),
     path("apis/register", register),
     path("apis/login", login),
+    path("apis/upload-profile", upload_profile),
     # test urls.
     path("apis/test", test),
     path("apis/firebase_test", firebase_test),

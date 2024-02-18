@@ -31,7 +31,6 @@ SECRET_KEY = "django-insecure-f+fu4g&beg2&fw$bo40k#s45y&@k^=)+)e#$i+xw4mhwx#na0b
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-CORS_ALLOWED_ORIGINS = []
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
@@ -168,7 +167,7 @@ AUTH_USER_MODEL = "apis.User"
 
 # firebase cred and initialization
 cred = credentials.Certificate("firebase-config.json")
-initialize_app(cred)
+initialize_app(cred, {"storageBucket": config("STORAGE_BUCKET")})
 
 
 # Email

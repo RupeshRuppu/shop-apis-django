@@ -7,6 +7,7 @@ from .models import User
 
 SUCCESS = "success"
 ERROR = "error"
+ALGORITHM = "HS256"
 
 
 def parse_body(body):
@@ -40,7 +41,7 @@ def get_method_error(req, supported_method):
 # TODO has to modify token exp in DAYS && time=30.
 def create_token(payload, time=180):
     payload["exp"] = datetime.now(tz=timezone.utc) + timedelta(seconds=time)
-    return encode(payload, settings.SECRET_KEY, algorithm="HS256")
+    return encode(payload, settings.SECRET_KEY, algorithm=ALGORITHM)
 
 
 # TODO token exp to be modified in terms of minutes after dev.
