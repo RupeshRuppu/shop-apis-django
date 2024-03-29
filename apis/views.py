@@ -1,17 +1,24 @@
-from django.shortcuts import render
-from django.http import JsonResponse
-from firebase_admin import firestore
-from .models import MasterProducts, User
-from django.views.decorators.csrf import csrf_exempt
-from .utils import *
-from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth import authenticate
-from django.core.validators import EmailValidator
-from django.core.mail import EmailMessage
-from django.template.loader import render_to_string
-from django.conf import settings
 import base64
-from firebase_admin import storage
+
+from django.conf import settings
+from django.contrib.auth import authenticate
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import EmailMessage
+from django.core.validators import EmailValidator
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.template.loader import render_to_string
+from django.views.decorators.csrf import csrf_exempt
+from firebase_admin import firestore, storage
+
+from .models import MasterProducts, User
+from .utils import (
+    generate_tokens,
+    get_error_response,
+    get_method_error,
+    get_success_response,
+    parse_body,
+)
 
 
 # Create your views here.

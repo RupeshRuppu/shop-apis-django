@@ -1,8 +1,10 @@
-from django.http import JsonResponse
+from datetime import datetime, timedelta, timezone
 from json import loads
-from jwt import encode, decode
+
 from django.conf import settings
-from datetime import datetime, timezone, timedelta
+from django.http import JsonResponse
+from jwt import decode, encode
+
 from .models import User
 
 SUCCESS = "success"

@@ -1,6 +1,14 @@
 from django.urls import path
-from .views import *
 
+from .views import (
+    firebase_test,
+    login,
+    main,
+    register,
+    send_email_to_user,
+    test,
+    upload_profile,
+)
 
 urlpatterns = [
     path("", main),
