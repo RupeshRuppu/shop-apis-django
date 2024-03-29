@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('apis', '0002_masterproducts_userorders_usercart'),
+        ("apis", "0002_masterproducts_userorders_usercart"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='fb_doc_id',
+            model_name="user",
+            name="fb_doc_id",
             field=models.CharField(blank=True, max_length=200, null=True),
         ),
     ]

@@ -10,55 +10,117 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('apis', '0001_initial'),
+        ("apis", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='MasterProducts',
+            name="MasterProducts",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('title', models.CharField(max_length=500)),
-                ('price', models.FloatField()),
-                ('rating', models.FloatField()),
-                ('product_description', models.TextField()),
-                ('reviews', models.TextField()),
-                ('reviews_rating', models.TextField()),
-                ('url', models.TextField()),
-                ('size', models.FloatField()),
-                ('color', models.CharField(max_length=50)),
-                ('category', models.CharField(max_length=50)),
-                ('gender', models.CharField(blank=True, choices=[('M', 'MALE'), ('F', 'FEMALE'), ('K', 'KIDS')], max_length=10, null=True)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("title", models.CharField(max_length=500)),
+                ("price", models.FloatField()),
+                ("rating", models.FloatField()),
+                ("product_description", models.TextField()),
+                ("reviews", models.TextField()),
+                ("reviews_rating", models.TextField()),
+                ("url", models.TextField()),
+                ("size", models.FloatField()),
+                ("color", models.CharField(max_length=50)),
+                ("category", models.CharField(max_length=50)),
+                (
+                    "gender",
+                    models.CharField(
+                        blank=True,
+                        choices=[("M", "MALE"), ("F", "FEMALE"), ("K", "KIDS")],
+                        max_length=10,
+                        null=True,
+                    ),
+                ),
             ],
             options={
-                'db_table': 'master_products',
+                "db_table": "master_products",
             },
         ),
         migrations.CreateModel(
-            name='UserOrders',
+            name="UserOrders",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('dateCreated', models.DateTimeField(default=datetime.datetime.now)),
-                ('product_ids', models.CharField(max_length=2000)),
-                ('order_status', models.CharField(choices=[('INITIATED', 'INITIATED'), ('PICKED', 'PICKED'), ('DISPATCHED', 'DISPATCHED'), ('DELIVERED', 'DELIVERED')], default='INITIATED', max_length=10)),
-                ('order_total', models.FloatField()),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("dateCreated", models.DateTimeField(default=datetime.datetime.now)),
+                ("product_ids", models.CharField(max_length=2000)),
+                (
+                    "order_status",
+                    models.CharField(
+                        choices=[
+                            ("INITIATED", "INITIATED"),
+                            ("PICKED", "PICKED"),
+                            ("DISPATCHED", "DISPATCHED"),
+                            ("DELIVERED", "DELIVERED"),
+                        ],
+                        default="INITIATED",
+                        max_length=10,
+                    ),
+                ),
+                ("order_total", models.FloatField()),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'db_table': 'orders',
+                "db_table": "orders",
             },
         ),
         migrations.CreateModel(
-            name='UserCart',
+            name="UserCart",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('dateCreated', models.DateTimeField(default=datetime.datetime.now)),
-                ('count', models.IntegerField(default=1)),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='apis.masterproducts')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("dateCreated", models.DateTimeField(default=datetime.datetime.now)),
+                ("count", models.IntegerField(default=1)),
+                (
+                    "product",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="apis.masterproducts",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'db_table': 'cart',
+                "db_table": "cart",
             },
         ),
     ]
